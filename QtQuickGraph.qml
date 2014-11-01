@@ -1,7 +1,7 @@
 import QtQuick 2.3
 
 Rectangle {
-    id: windowsss
+    id: window
     width: 800
     height: 500
 
@@ -31,7 +31,7 @@ Rectangle {
             var cw = bw + (p*2) + 1;
             var ch = bh + (p*2) + 1;
 
-//            var ctx = getContext("2d");
+            ctx.beginPath();
 
             for (var x = 0; x <= bw; x += 40) {
                 ctx.moveTo(x + p, p);
@@ -48,17 +48,7 @@ Rectangle {
             ctx.stroke();
         }
 
-        onPaint: {
-            var ctx = getContext('2d')
-            ctx.reset()
-            drawGrid(ctx)
-
-            console.log("########")
-            for (var i = 0; i < points.count; i++)
-                console.log(points.get(i).x)
-
-
-
+        function drawLine(ctx) {
             ctx.beginPath();
             if(points.count > 1) {
                 ctx.moveTo(points.get(0).x, points.get(0).y)
@@ -71,9 +61,27 @@ Rectangle {
             ctx.stroke();
         }
 
+        function logPoints() {
+            console.log("########")
+            for (var i = 0; i < points.count; i++)
+                console.log("(" + points.get(i).x + ", " + points.get(i).x + ")")
+        }
+
+        onPaint: {
+            var ctx = getContext('2d')
+            ctx.reset()
+
+            drawGrid(ctx)
+            drawLine(ctx)
+
+            logPoints();
+        }
+
         MouseArea{
             anchors.fill: parent
             onClicked: {
+
+                // Find the index of the new point
                 var i = 0
                 var x = mouseX
                 var y = mouseY
