@@ -24,14 +24,14 @@ Rectangle {
         id: myCanvas
         anchors.fill: parent
 
-        function drawGrid() {
+        function drawGrid(ctx) {
             var bw = 600;
             var bh = 400;
             var p = 10;
             var cw = bw + (p*2) + 1;
             var ch = bh + (p*2) + 1;
 
-            var ctx = getContext("2d");
+//            var ctx = getContext("2d");
 
             for (var x = 0; x <= bw; x += 40) {
                 ctx.moveTo(x + p, p);
@@ -49,17 +49,22 @@ Rectangle {
         }
 
         onPaint: {
-
-            drawGrid()
-
-//            console.log(points.get(i).x)
             var ctx = getContext('2d')
+            ctx.reset()
+            drawGrid(ctx)
+
+            console.log("########")
+            for (var i = 0; i < points.count; i++)
+                console.log(points.get(i).x)
+
+
+
             ctx.beginPath();
             if(points.count > 1) {
                 ctx.moveTo(points.get(0).x, points.get(0).y)
                 for (var i = 1; i < points.count; i++)
                     ctx.lineTo(points.get(i).x, points.get(i).y)
-//                    console.log(points.get(i).x)
+
             }
 
             ctx.strokeStyle = "#333";
@@ -69,15 +74,15 @@ Rectangle {
         MouseArea{
             anchors.fill: parent
             onClicked: {
-//                var i = 0
+                var i = 0
                 var x = mouseX
                 var y = mouseY
-//                while (points.get(i).x < x) {
-//                    i++;
-//                }
+                while (points.get(i).x < x) {
+                    i++;
+                }
 
                 points.append({x:x, y:y})
-//                points.move(1, 2, 1)
+                points.move(points.count-1, i, 1)
                 myCanvas.requestPaint()
             }
 
