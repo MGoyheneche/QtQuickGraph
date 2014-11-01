@@ -34,19 +34,18 @@ Rectangle {
             var ctx = getContext("2d");
 
             for (var x = 0; x <= bw; x += 40) {
-                ctx.moveTo(0.5 + x + p, p);
-                ctx.lineTo(0.5 + x + p, bh + p);
+                ctx.moveTo(x + p, p);
+                ctx.lineTo(x + p, bh + p);
             }
 
 
             for (var x = 0; x <= bh; x += 40) {
-                ctx.moveTo(p, 0.5 + x + p);
-                ctx.lineTo(bw + p, 0.5 + x + p);
+                ctx.moveTo(p, x + p);
+                ctx.lineTo(bw + p, x + p);
             }
 
             ctx.strokeStyle = "#ccc";
             ctx.stroke();
-
         }
 
         onPaint: {
